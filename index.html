@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Excel Error Checker</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="app">
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-icon">▦</span>
+        <span class="brand-text">Excel Error Checker</span>
+      </div>
+      <div class="brand-sub">Quét lỗi công thức trong nhiều file Excel cùng lúc</div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- STEP 1: UPLOAD -->
+    <section class="card">
+      <div class="card-title">
+        <span class="step-badge">1</span> Chọn file Excel
+      </div>
+
+      <div id="dropzone" class="dropzone">
+        <div class="dropzone-icon">⇪</div>
+        <div class="dropzone-text">Kéo thả file/folder vào đây, hoặc</div>
+        <div class="dropzone-buttons">
+          <button type="button" id="btnPickFiles" class="btn btn-primary">Chọn file</button>
+          <button type="button" id="btnPickFolder" class="btn btn-secondary">Chọn cả folder</button>
+        </div>
+        <div class="dropzone-hint">Hỗ trợ .xlsx .xlsm .xltx .xltm — có thể chọn nhiều file</div>
+      </div>
+
+      <input type="file" id="fileInput" multiple accept=".xlsx,.xlsm,.xltx,.xltm" hidden>
+      <input type="file" id="folderInput" multiple webkitdirectory directory hidden>
+
+      <div id="fileList" class="file-list"></div>
+    </section>
+
+    <!-- STEP 2: SHEETS -->
+    <section class="card" id="sheetsCard" style="display:none;">
+      <div class="card-title">
+        <span class="step-badge">2</span> Chọn sheet cần quét
+      </div>
+      <div id="sheetsContainer" class="sheets-container"></div>
+    </section>
+
+    <!-- STEP 3: ERROR FILTER -->
+    <section class="card" id="filterCard" style="display:none;">
+      <div class="card-title">
+        <span class="step-badge">3</span> Chọn loại lỗi cần tìm
+      </div>
+      <div class="filter-actions">
+        <button type="button" id="btnSelectAllErr" class="btn btn-ghost btn-sm">Chọn tất cả</button>
+        <button type="button" id="btnClearAllErr" class="btn btn-ghost btn-sm">Bỏ chọn hết</button>
+      </div>
+      <div id="errorFilterGrid" class="error-grid"></div>
+    </section>
+
+    <!-- STEP 4: SCAN -->
+    <section class="card" id="scanCard" style="display:none;">
+      <div class="card-title">
+        <span class="step-badge">4</span> Quét & Kết quả
+      </div>
+
+      <div class="scan-controls">
+        <button type="button" id="btnScan" class="btn btn-success btn-lg">▶ Bắt đầu quét</button>
+        <button type="button" id="btnExport" class="btn btn-primary btn-lg" disabled>⬇ Xuất báo cáo Excel</button>
+      </div>
+
+      <div id="progressWrap" class="progress-wrap" style="display:none;">
+        <div class="progress-bar-bg">
+          <div id="progressBar" class="progress-bar-fill"></div>
+        </div>
+        <div id="progressText" class="progress-text">0%</div>
+      </div>
+
+      <div id="statusMsg" class="status-msg"></div>
+
+      <div class="result-summary" id="resultSummary" style="display:none;">
+        <div class="result-count" id="resultCount">Lỗi tìm thấy: 0</div>
+      </div>
+
+      <div class="table-wrap" id="tableWrap" style="display:none;">
+        <table class="result-table">
+          <thead>
+            <tr>
+              <th>File</th>
+              <th>Sheet</th>
+              <th>Row</th>
+              <th>Column</th>
+              <th>Cell</th>
+              <th>Error</th>
+              <th>Formula</th>
+            </tr>
+          </thead>
+          <tbody id="resultTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    Excel Error Checker · Dùng nội bộ team
+  </footer>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
