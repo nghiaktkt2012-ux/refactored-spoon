@@ -44,10 +44,16 @@
       <div id="fileList" class="file-list"></div>
     </section>
 
-    <!-- STEP 2: SHEETS -->
+       <!-- STEP 2: SHEETS -->
     <section class="card" id="sheetsCard" style="display:none;">
       <div class="card-title">
-        <span class="step-badge">2</span> Chọn sheet cần quét
+        <div class="card-title-left">
+          <span class="step-badge">2</span> Chọn sheet cần quét
+        </div>
+        <div class="sheets-top-actions">
+          <button type="button" id="btnSelectAllSheets" class="btn btn-ghost btn-sm">Chọn tất cả</button>
+          <button type="button" id="btnClearAllSheets" class="btn btn-ghost btn-sm">Bỏ chọn hết</button>
+        </div>
       </div>
       <div id="sheetsContainer" class="sheets-container"></div>
     </section>
