@@ -4,9 +4,9 @@
   --border: #e3e8ef;
   --text: #1f2937;
   --text-muted: #6b7280;
-  --primary: #4f46e5;
-  --primary-hover: #4338ca;
-  --primary-light: #eef2ff;
+  --primary: #e63b2e;
+  --primary-hover: #c9301f;
+  --primary-light: #fdeceb;
   --success: #16a34a;
   --success-hover: #15803d;
   --danger: #dc2626;
@@ -26,7 +26,7 @@ body {
 }
 
 .topbar {
-  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+  background: linear-gradient(135deg, #e63b2e 0%, #f0574a 100%);
   color: white;
   padding: 28px 0;
 }
@@ -69,10 +69,17 @@ body {
 .card-title {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 16px;
+}
+
+.card-title-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .step-badge {
@@ -154,11 +161,11 @@ body {
 }
 .btn-success:hover:not(:disabled) { background: var(--success-hover); }
 .btn-ghost {
-  background: transparent;
-  color: var(--text-muted);
+  background: white;
+  color: var(--text);
   border: 1px solid var(--border);
 }
-.btn-ghost:hover:not(:disabled) { background: #f3f4f6; }
+.btn-ghost:hover:not(:disabled) { background: #f3f4f6; border-color: var(--primary); color: var(--primary); }
 .btn-sm { padding: 6px 12px; font-size: 13px; }
 .btn-lg { padding: 12px 24px; font-size: 15px; }
 
@@ -204,6 +211,10 @@ body {
 .file-remove:hover { background: var(--danger-light); border-radius: 6px; }
 
 /* SHEETS */
+.sheets-top-actions {
+  display: flex;
+  gap: 8px;
+}
 .sheets-container {
   display: flex;
   flex-direction: column;
@@ -221,12 +232,38 @@ body {
   margin-bottom: 10px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.sheet-file-title-left {
+  display: flex;
+  align-items: center;
   gap: 8px;
 }
 .sheet-file-title .badge-count {
   font-weight: 400;
   font-size: 12px;
   color: var(--text-muted);
+}
+.sheet-file-actions {
+  display: flex;
+  gap: 6px;
+}
+.sheet-file-actions button {
+  background: white;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.sheet-file-actions button:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-light);
 }
 .sheet-checkbox-grid {
   display: grid;
@@ -245,7 +282,7 @@ body {
   cursor: pointer;
 }
 .sheet-checkbox:hover { border-color: var(--primary); }
-.sheet-checkbox input { cursor: pointer; }
+.sheet-checkbox input { cursor: pointer; accent-color: var(--primary); }
 
 /* ERROR FILTER */
 .filter-actions {
@@ -272,7 +309,7 @@ body {
   color: var(--danger);
 }
 .error-checkbox:hover { border-color: var(--danger); background: var(--danger-light); }
-.error-checkbox input { cursor: pointer; }
+.error-checkbox input { cursor: pointer; accent-color: var(--danger); }
 
 /* SCAN CONTROLS */
 .scan-controls {
@@ -297,7 +334,7 @@ body {
 .progress-bar-fill {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #4f46e5, #6366f1);
+  background: linear-gradient(90deg, #e63b2e, #f0574a);
   transition: width 0.2s ease;
 }
 .progress-text {
@@ -378,4 +415,5 @@ body {
 @media (max-width: 600px) {
   .file-name { max-width: 180px; }
   .dropzone-buttons { flex-direction: column; }
+  .sheet-file-title { flex-direction: column; align-items: flex-start; }
 }
