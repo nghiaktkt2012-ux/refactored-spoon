@@ -8,7 +8,7 @@ import openpyxl
 
 app = Flask(__name__)
 
-MAX_CONTENT_LENGTH = 50 * 1024 * 1024  # 50MB tổng mỗi request
+MAX_CONTENT_LENGTH = 100 * 1024 * 1024  # 100MB tổng mỗi request
 app.config["MAX_CONTENT_LENGTH"] = MAX_CONTENT_LENGTH
 
 ALLOWED_EXT = {".xlsx", ".xlsm", ".xltx", ".xltm"}
