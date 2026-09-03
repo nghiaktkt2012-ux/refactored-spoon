@@ -18,6 +18,8 @@ const fileListEl = document.getElementById("fileList");
 
 const sheetsCard = document.getElementById("sheetsCard");
 const sheetsContainer = document.getElementById("sheetsContainer");
+const btnSelectAllSheets = document.getElementById("btnSelectAllSheets");
+const btnClearAllSheets = document.getElementById("btnClearAllSheets");
 
 const filterCard = document.getElementById("filterCard");
 const errorFilterGrid = document.getElementById("errorFilterGrid");
@@ -197,17 +199,26 @@ async function fetchSheetsInfo() {
 function renderSheetsSelector() {
   sheetsContainer.innerHTML = "";
 
-  fileSheetsInfo.forEach(fileInfo => {
+  fileSheetsInfo.forEach((fileInfo, fileIdx) => {
     const group = document.createElement("div");
     group.className = "sheet-file-group";
 
     const title = document.createElement("div");
     title.className = "sheet-file-title";
-    title.innerHTML = `📄 ${fileInfo.filename} <span class="badge-count">(${fileInfo.sheets.length} sheet)</span>`;
+    title.innerHTML = `
+      <div class="sheet-file-title-left">
+        📄 ${escapeHtml(fileInfo.filename)} <span class="badge-count">(${fileInfo.sheets.length} sheet)</span>
+      </div>
+      <div class="sheet-file-actions">
+        <button type="button" class="sheet-group-select-all" data-group="${fileIdx}">Chọn tất cả</button>
+        <button type="button" class="sheet-group-clear-all" data-group="${fileIdx}">Bỏ chọn hết</button>
+      </div>
+    `;
     group.appendChild(title);
 
     const grid = document.createElement("div");
     grid.className = "sheet-checkbox-grid";
+    grid.dataset.group = fileIdx;
 
     fileInfo.sheets.forEach(sheetName => {
       const label = document.createElement("label");
@@ -216,13 +227,29 @@ function renderSheetsSelector() {
         <input type="checkbox" checked
                data-file="${encodeURIComponent(fileInfo.filename)}"
                data-sheet="${encodeURIComponent(sheetName)}">
-        <span>${sheetName}</span>
+        <span>${escapeHtml(sheetName)}</span>
       `;
       grid.appendChild(label);
     });
 
     group.appendChild(grid);
     sheetsContainer.appendChild(group);
+  });
+
+  // Nút chọn/bỏ chọn riêng cho từng file
+  sheetsContainer.querySelectorAll(".sheet-group-select-all").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const groupIdx = btn.dataset.group;
+      sheetsContainer.querySelectorAll(`.sheet-checkbox-grid[data-group="${groupIdx}"] input[type="checkbox"]`)
+        .forEach(cb => cb.checked = true);
+    });
+  });
+  sheetsContainer.querySelectorAll(".sheet-group-clear-all").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const groupIdx = btn.dataset.group;
+      sheetsContainer.querySelectorAll(`.sheet-checkbox-grid[data-group="${groupIdx}"] input[type="checkbox"]`)
+        .forEach(cb => cb.checked = false);
+    });
   });
 }
 
@@ -251,7 +278,12 @@ function renderErrorFilter() {
     errorFilterGrid.appendChild(label);
   });
 }
-
+btnSelectAllSheets.addEventListener("click", () => {
+  sheetsContainer.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = true);
+});
+btnClearAllSheets.addEventListener("click", () => {
+  sheetsContainer.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+});
 btnSelectAllErr.addEventListener("click", () => {
   errorFilterGrid.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = true);
 });
